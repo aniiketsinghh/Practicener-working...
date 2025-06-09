@@ -5,6 +5,7 @@ import React from 'react';
 import HomePage from './pages/HomePage';
 import { useEffect, useState } from 'react';
 import Navbar from './components/Navbar';
+import CreateNote from './pages/CreatePage';
 
 
 const App = () => {
@@ -17,12 +18,14 @@ const App = () => {
   }, []);
   return (
     <div className="text-3xl font-bold underline">
-      <Navbar />
+
+              {isAuthenticated  ?<Navbar />: <LoginPage />}
     
       <Routes>
-        <Route path="/" element={isAuthenticated ? <HomePage />: <LoginPage />} />
-        <Route path="/signup" element={isAuthenticated ? <HomePage />: <SignUpPage />} />
-        <Route path="/login" element={!isAuthenticated ? <LoginPage/>: <HomePage />} />
+        <Route path="/" element={<HomePage />} />
+        <Route path="/signup" element={<SignUpPage />} />
+        <Route path="/login" element={<LoginPage/>} />
+        <Route path="/create" element={<CreateNote />} />
       </Routes>
     </div>
   )

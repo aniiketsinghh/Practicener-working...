@@ -1,6 +1,29 @@
 import { LogOut, Plus, Info } from "lucide-react";
+import {Link} from "react-router"
+import axios from "axios";
+import { useNavigate } from "react-router";
 
 const Navbar = () => {
+  const navigate = useNavigate();
+  const handleLogout = async() => {
+    try {
+      
+  await axios.post(
+  
+      "http://localhost:5000/api/auth/logout",
+      {}, // empty body
+      {
+        withCredentials: true,
+      }
+    );
+    navigate("/login");
+    } catch (error) {
+      console.error("Logout failed:", error);
+      // Optionally, you can handle the error here, e.g., show a notification
+      alert("Logout failed. Please try again.");
+    }
+  }
+
   return (
     <nav className="flex items-center justify-between px-6 py-3 bg-black shadow-md">
       {/* Logo */}
@@ -21,12 +44,15 @@ const Navbar = () => {
         </div>
 
         {/* Add Note */}
-        <button className="bg-green-800 hover:bg-green-700 text-white p-2 rounded-md">
+
+        <Link  to="/create" className="bg-green-800 hover:bg-green-700 text-white p-2 rounded-md">
           <Plus size={18} />
-        </button>
+        </Link>
 
         {/* Logout */}
-        <button className="flex items-center gap-1 hover:text-gray-300">
+        <button
+        onClick={handleLogout}
+        className="flex items-center gap-1 hover:text-gray-300">
           <LogOut size={18} />
         </button>
       </div>
